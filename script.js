@@ -17,12 +17,28 @@ function listarPratos() {
                 <td>${prato.nome}</td>
                 <td>${prato.valor}</td>
                 <td>${prato.tipoPrato}</td>
+                <td><button type="button" class="btn btn-danger btn-sm" onclick="excluirPrato(${prato.id})">Excluir</button></td>
             `;
 
         pratosTableBody.appendChild(row);
       });
     })
 }
+
+
+function excluirPrato(id) {
+  // Para concatenar string com variavel, use à crase
+  fetch(`http://127.0.0.1:8080/restaurante/prato?id=${id}`, {
+    method: "DELETE"
+  })
+  .then(response => {
+    if (response.ok) {
+      alert("Prato excluido com sucesso!");
+      listarPratos();
+    }
+  })
+}
+
 
 document.getElementById('addPratoForm').addEventListener('submit', function (event) {
   event.preventDefault();
